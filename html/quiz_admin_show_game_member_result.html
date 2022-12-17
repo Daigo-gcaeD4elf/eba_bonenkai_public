@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結果照会</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <h3 class="text-center text-lg"><?=$_POST['game_name']?></h3>
+            <h3 class="text-center text-lg">開催時刻：<?=$_POST['game_date']?></h3>
+            <div class="text-center mt-4"><?=$_POST['member_name']?> さんの結果</div>
+            <div class="text-center">合計獲得金額：<?=$memberTotalScore['total_point']?> 円</div>
+            <div class="text-center">順位：<?=$memberTotalScore['ranking']?> 位</div>
+            <h3 class="text-center font-bold text-lg mt-4">結果詳細</h3>
+            <div class="flex justify-center">
+                <table class="w-full lg:w-11/12 table-fixed mb-4 text-center">
+                    <tr class="bg-red-400 text-white">
+                        <th class="lg:w-1/3 border-collapse border border-gray-400">問題文</th>
+                        <th class="border-collapse border border-gray-400">回答</th>
+                        <th class="border-collapse border border-gray-400">正解</th>
+                        <th class="lg:w-1/6 border-collapse border border-gray-400">獲得金額(円)</th>
+                    </tr>
+                    <?php foreach($memberResult as $result):?>
+                        <tr>
+                            <td class="border-collapse border border-gray-400"><?=$result['quiz_question_sentence']?></td>
+                            <td class="border-collapse border border-gray-400">
+                                <div>【<?=$result['member_answer']?>】</div>
+                                <div><?=$result['member_answer_text']?></div>
+                            </td>
+                            <td class="border-collapse border border-gray-400">
+                                <div>【<?=$result['quiz_answer']?>】</div>
+                                <div><?=$result['quiz_answer_text']?></div>
+                            </td>
+                            <td class="border-collapse border border-gray-400 <?=($result['is_using_super_satoshikun'] == USING_SUPER_SATOSHIKUN) ? ' font-extrabold text-red-600' : ''?>"><?=$result['acquired_point']?></td>
+                        </tr>
+                    <?php endforeach;?>
+                </table>
+            </div>
+            <form action="./<?=$_POST['from_page']?>.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="back" value="戻る">
+                    <input type="hidden" name="game_id" value="<?=$_POST['game_id']?>">
+                    <input type="hidden" name="game_name" value="<?=$_POST['game_name']?>">
+                    <input type="hidden" name="game_date" value="<?=$_POST['game_date']?>">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

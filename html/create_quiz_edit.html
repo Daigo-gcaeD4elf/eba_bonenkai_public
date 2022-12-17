@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズを作成</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p class="text-2xl text-center mt-3">クイズを作成</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <form action="./create_quiz_conf.php<?=(!empty($quizId) ? '?quiz_id='. $quizId : '')?>" method="POST" name="toConf">
+                <input type="hidden" name="from_page" value="<?=$_POST['from_page']?>">
+                <!-- <p class="text-center">形式</p> -->
+                <div class="mt-2 mb-2">
+                    <div class="text-center">問題文</div>
+                    <div class="text-center">
+                        <textarea name="quiz_question_sentence" cols="30" rows="10" class="border border-black"><?=(!empty($quiz) ? $quiz['quiz_question_sentence'] : '')?></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div id="app">
+                        <div>選択肢<button type="button" v-on:click="addOptionTag" class="bg-gray-200 border-2 border-black text-xs p-0.5">追加</button></div>
+                        <div v-for="(tag, index) in optionTag">
+                            <input type="text" v-bind:name="'quiz_option_id_' + index" v-model="tag.quiz_option_id" class="border border-black w-1/12 mr-2" autocomplete="off">
+                            <input type="text" v-bind:name="'quiz_option_text_' + index" v-model="tag.quiz_option_text" class="border border-black" autocomplete="off">
+                            <select v-bind:name="'fifty_fifty_display_' + index" v-model="tag.fifty_fifty_display" class="border border-black" autocomplete="off">
+                                <option value="0">50-50で選択不可</option>
+                                <option value="1">50-50で選択可</option>
+                            </select>
+                            <button type="button" v-on:click="deleteOptionTag(index)" class="bg-gray-200 border-2 border-black text-xs p-0.5">削除</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div>答え</div>
+                    <div>
+                        <input type="text" name="quiz_answer" class="border border-black" value="<?=(!empty($quiz) ? $quiz['quiz_answer'] : '')?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div>制限時間(秒)</div>
+                    <div>
+                        <input type="text" name="time_limit" id="time_limit" class="border border-black" value="<?=(!empty($quiz) ? $quiz['time_limit'] : 30)?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div>配点</div>
+                    <div>
+                        <input type="text" name="allocation" class="border border-black" value="<?=(!empty($quiz) ? $quiz['allocation'] : '')?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div>50-50選択可否</div>
+                    <div>
+                        <select name="fifty_fifty_chooseable" class="border border-black" autocomplete="off">
+                            <option value="0" <?=(!empty($quiz) ? ($quiz['fifty_fifty_chooseable'] === '0' ? 'selected' : '') : '')?>>選択不可</option>
+                            <option value="1" <?=(!empty($quiz) ? ($quiz['fifty_fifty_chooseable'] === '1' ? 'selected' : '') : 'selected')?>>選択可</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="m-4 mt-8 text-center">
+                    <input type="button" onClick="submit()" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="create_quiz" value="確定">
+                </div>
+            </form>
+            <form action="./<?=$_POST['from_page']?>.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="create_quiz" value="戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        let id = '<?=$_SESSION["member_id"]?>';
+        let timeLimit = '<?=(!empty($quiz) ? $quiz["time_limit"] : 30)?>';
+        let quizOptionTagJson = '<?=$quizOptionTagJson?>'
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/create_quiz_edit.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

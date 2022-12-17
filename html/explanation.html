@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <p><?=$userData['member_name']?> さん</p>
+        <p id="page_title">ゲーム説明</p>
+        <div id="main_area">
+            <p class="main_p">【勝ち】　継続：nextゲームへ</p>
+            <p class="main_p">【負け】　終了：ゲームover</p>
+            <p class="main_p">【あいこ】終了：ゲームover</p>
+            <p class="main_p">【賞金】　クオカード5000円</p>
+        </div>
+        <form action="../php/routing.php" method="POST" name="gameStart">
+            <input type="hidden" name="member_id" value="<?=$userData['member_id']?>">
+            <input type="hidden" name="member_name" value="<?=$userData['member_name']?>">
+        </form>
+        <h3 class="text-center">ゲームが始まるよ！<br>用意はいいかい？</h3>
+    </div>
+    <script src="../js/common_function.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/watch_game_state.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/explanation.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

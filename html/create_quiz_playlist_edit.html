@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズプレイリストを作成</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p class="text-2xl text-center mt-3">クイズプレイリストを作成</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <form action="./create_quiz_playlist_conf.php<?=(!empty($playlistId) ? '?playlist_id='. $playlistId : '')?>" method="POST">
+                <input type="hidden" name="from_page" value="<?=$_POST['from_page']?>">
+                <div class="mt-2 mb-2">
+                    <div class="text-center">プレイリスト名</div>
+                    <div class="text-center">
+                        <input type="text" name="playlist_title" class="border border-black" value="<?=(!empty($playlist) ? $playlist['playlist_title'] : '')?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="mt-8 mb-8 text-center">
+                    <div id="app">
+                        <div class="mb-1"><button type="button" class="bg-gray-100 border border-black mr-2" v-on:click="addPlaylistOrder">追加</button></div>
+                        <div v-for="(tag, index) in playlistOrder">
+                            <span>{{ (index + 1) }}問目</span>
+                            <input type="hidden" v-bind:name="'playlist_order_' + index" v-bind:value="(index + 1)">
+                            <select class="border border-black" autocomplete="off" v-bind:name="'quiz_id_' + index" v-model="tag.quiz_id">
+                            <?php foreach($createdQuizzes as $createdQuiz):?>
+                                <option value="<?=$createdQuiz['quiz_id']?>">クイズ<?=$createdQuiz['quiz_id']?>. <?=$createdQuiz['quiz_question_sentence']?></option>
+                            <?php endforeach;?>
+                            </select>
+                            <button type="button" class="bg-gray-100 border border-black mr-2" v-on:click="deletePlaylistOrder(index)">削除</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 mb-2">
+                    <div class="text-center">スーパーさとしくん使用可能回数</div>
+                    <div class="text-center">
+                        <input type="text" name="super_satoshikun_power_point" class="border border-black" value="<?=(!empty($playlist) ? $playlist['super_satoshikun_power_point'] : '')?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="mt-2 mb-2">
+                    <div class="text-center">フィフティフィフティ使用可能回数</div>
+                    <div class="text-center">
+                        <input type="text" name="fifty_fifty_power_point" class="border border-black" value="<?=(!empty($playlist) ? $playlist['fifty_fifty_power_point'] : '')?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="mt-2 mb-2">
+                    <div class="text-center">オーディエンス使用可能回数</div>
+                    <div class="text-center">
+                        <input type="text" name="audience_power_point" class="border border-black" value="<?=(!empty($playlist) ? $playlist['audience_power_point'] : '')?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="m-4 mt-8 text-center">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="create_quiz_playlist" value="確定">
+                </div>
+            </form>
+            <form action="./<?=$_POST['from_page']?>.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="create_quiz_playlist" value="戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        let playlistOrderJson = '<?=$playlistOrderJson?>';
+        let createdQuizzesJson = '<?=$createdQuizzesJson?>';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/create_quiz_playlist_edit.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

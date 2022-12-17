@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <div>
+            <p class="page_title"><?=$numOfTime?>回戦</p>
+        </div>
+        <p class="page_title">じゃ～んけ～ん</p>
+        <div id="main_area">
+            <p id="adminer_rps"><?=$adminerChoise?>を選択しています。</p>
+            <div id="bar">
+                <countdown></countdown>
+            </div>
+            <form action="./admin_pre_result.php" method="POST" name="toResult">
+                <div class="ingame_centered">
+                    <p class="ingame_p"><input type="radio" class="adminerRps" name="adminerRps" id="rock"     value="1" <?=$radioOne?>>グー</p>
+                    <p class="ingame_p"><input type="radio" class="adminerRps" name="adminerRps" id="scissors" value="2" <?=$radioTwo?>>チョキ</p>
+                    <p class="ingame_p"><input type="radio" class="adminerRps" name="adminerRps" id="paper"    value="3" <?=$radioThree?>>パー</p>
+                </div>
+            </form>
+        </div>
+        <div class="text-center">勝ち残り: <?=$numOfSurvivors?> 人</div>
+        <div class="text-center">参加者　：<?=$numOfPlayers?> 人</div>
+    </div>
+    <script>
+        let timeLimit = '<?=$timeLimit?>';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/admin_game.js?now=<?=date('YmdHis')?>"></script>></script></script>
+</body>
+</html>

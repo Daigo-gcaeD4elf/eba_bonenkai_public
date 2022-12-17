@@ -1,0 +1,4 @@
+log/
+node_modules/
+css/dist.css
+php/DbPass.php

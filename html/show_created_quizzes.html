@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作成したクイズ</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="flex justify-center">
+                <table class="text-center w-full table-fixed border-collapse border border-gray-400">
+                    <tr class="bg-red-400 text-white">
+                        <th class="border-collapse border border-gray-400">クイズ名</th>
+                        <th class="border-collapse border border-gray-400 w-1/4">問題文</th>
+                        <th class="border-collapse border border-gray-400 w-1/4">選択肢</th>
+                        <th class="border-collapse border border-gray-400 w-1/12">答え</th>
+                        <th class="border-collapse border border-gray-400">制限時間</th>
+                        <th class="border-collapse border border-gray-400 w-1/12">配点</th>
+                        <th class="border-collapse border border-gray-400 w-1/12"></th>
+                        <th class="border-collapse border border-gray-400 w-1/12"></th>
+                    </tr>
+                    <?php foreach($quizzes as $quiz):?>
+                        <tr>
+                            <td class="border-collapse border border-gray-400">クイズ<?=$quiz['quiz_id']?></td>
+                            <td class="border-collapse border border-gray-400"><?=nl2br($quiz['quiz_question_sentence'])?></td>
+                            <td class="border-collapse border border-gray-400">
+                                <?php foreach($quiz['quiz_option'] as $quizOption):?>
+                                    <div><?=$quizOption['quiz_option_id']?>. <?=$quizOption['quiz_option_text']?></div>
+                                <?php endforeach;?>
+                            </td>
+                            <td class="border-collapse border border-gray-400"><?=$quiz['quiz_answer']?></td>
+                            <td class="border-collapse border border-gray-400"><?=$quiz['time_limit']?></td>
+                            <td class="border-collapse border border-gray-400"><?=$quiz['allocation']?></td>
+                            <td class="border-collapse border border-gray-400">
+                                <form action="./create_quiz_edit.php?quiz_id=<?=$quiz['quiz_id']?>" method="POST">
+                                    <input type="hidden" name="from_page" value="show_created_quizzes">
+                                    <input type="submit" name="quiz_edit" class="border border-black" value="編集">
+                                </form>
+                            </td>
+                            <td class="border-collapse border border-gray-400">
+                                <?php $quizId = $quiz['quiz_id'];?>
+                                <form action="" onsubmit='deleteMsg("<?=$quizId?>")' method="POST">
+                                    <input type="hidden" name="from_page" value="show_created_quizzes">
+                                    <input type="hidden" name="quiz_id" value="<?=$quiz['quiz_id']?>">
+                                    <input type="submit" name="quiz_delete" class="border border-black" value="削除">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                </table>
+            </div>
+        </div>
+        <form action="./quiz_config.php" method="POST">
+            <div class="m-4 mt-8 text-center">
+                <input class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="back" value="戻る">
+            </div>
+        </form>
+    </div>
+    <script>
+        function deleteMsg (quizId) {
+            return confirm(`クイズ${quizId}を削除します。よろしいですか？`);
+        }
+    </script>
+</body>
+</html>

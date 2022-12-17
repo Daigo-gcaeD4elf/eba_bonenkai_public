@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <h2 id="page_title">じゃんけん <?=$numOfTimes?>回目終了</h2>
+        <div id="main_area">
+            <div class="btn_area_kanri">
+                <form action="" method="POST" name="nextGame">
+                    <input type="hidden" name="next" value="次のゲームへ">
+                </form>
+                <button class="button" id="next">次のゲームへ</button>
+            </div>
+            <div class="btn_area_kanri">
+                <form action="" method="POST" name="finishGame">
+                    <input type="hidden" name="finish" value="ゲーム終了">
+                </form>
+                <button class="button" id="finish">ゲーム終了</button>
+            </div>
+            <div class="btn_area_kanri" style="display: none;">
+                <form action="" method="POST" name="backGame">
+                    <input type="hidden" name="back" value="1つ戻す">
+                </form>
+                <button class="button" id="back">1つ戻す</button>
+            </div>
+            <div class="btn_area_kanri">
+                <form action="./config.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin_result">
+                    <input class="button" type="submit" name="config" value="設定">
+                </form>
+            </div>
+            <table>
+                <tr>
+                    <th colspan="5">勝ち  <?=count($survivors)?>人</th>
+                </tr>
+                <?php $i = 0;?>
+                <?php foreach($survivors as $survivor):?>
+                    <?php $i++;?>
+                    <?php if ($i % 5 === 1):?><tr><?php endif;?>
+                    <td><?=$survivor['member_name']?></td>
+                    <?php if ($i % 5 === 0):?></tr><?php endif;?>
+                <?php endforeach;?>
+                <?php if ($i % 5 !== 0):?>
+                    <?php for ($j = $i % 5; $j < 5; $j++):?>
+                        <td></td>
+                    <?php endfor;?>
+                    </tr>
+                <?php endif;?>
+            </table>
+            <div class="text-center">勝ち残り: <?=$numOfSurvivors?> 人</div>
+            <div class="text-center">参加者　: <?=$numOfPlayers?> 人</div>
+        </div>
+    </div>
+    <script src="../js/admin_result.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

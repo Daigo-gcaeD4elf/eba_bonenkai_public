@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBA クイズコーナー</title>
+    <link rel="stylesheet" href="../css/dist.css">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p class="text-center font-bold text-xl mb-4">ログイン</p>
+        <form action="../php/quiz_login.php" method="POST">
+            <div class="bg-green-50 m-3 p-4 border-2 border-black">
+                <div class="text-center text-3xl text-gray-800">名前を入力してね</div>
+                <div class="text-center" style="padding-bottom: 1em;">(ユーザーIDは、メールアドレスの@から前です)</div>
+                <div class="text-center mb-2">
+                    <span class="mr-2">ユーザーID</span>
+                    <input type="text" name="id" placeholder="s.ebata" class="border border-gray-500">
+                </div>
+                <div class="text-center">
+                    <span class="mr-2">パスワード</span>
+                    <input type="text" name="password" placeholder="eba" class="border border-gray-500">
+                </div>
+                <p class="mt-2 text-center text-red-600 font-bold"><?=$loginErr?></p>
+            </div>
+            <div class="bg-white m-4 text-center">
+                <input class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="send" value="クイズゲームに参加">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>じゃんけん ログイン状況チェック</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-3/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p class="text-2xl text-center mt-3">じゃんけんゲーム ログイン状況チェック</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="text-right">
+                <span>マスタ登録済人数:</span>
+                <span><?=$member['num_of_all_members'];?></span>
+            </div>
+            <div class="text-center">ログイン済メンバー</div>
+            <div class="text-center">
+                <span id="js_num_of_login_members" class="font-bold text-9xl"></span>
+                <span>人 / <?=$member['num_of_participation_members'];?>人</span>
+            </div>
+            <div class="text-center">
+                <span>内、欠席連絡済人数:</span>
+                <span id="js_num_of_login_and_absence_members" class="text-3xl"></span>
+            </div>
+            <div class="flex">
+                <div class="flex-auto w-1/2 m-2 overflow-y-auto h-96">
+                    <!-- ログイン済メンバーテーブル -->
+                    <table class="w-full text-center border-collapse border border-gray-400">
+                        <thead>
+                            <th class="bg-red-400 text-white sticky top-0" colspan="4">
+                                <span>ログイン済:</span>
+                                <span id="js_num_of_login_members_table_header"></span>
+                                <span>人</span>
+                                <span class="ml-4 text-sm">(米印は欠席連絡済の方)</span>
+                            </th>
+                        </thead>
+                        <tbody id="js_login_members_table" class="flex-col justify-between"></tbody>
+                    </table>
+                </div>
+                <div class="flex-auto m-2 overflow-y-auto h-96">
+                    <!-- 未ログインメンバーテーブル -->
+                    <table class="w-full text-center border-collapse border border-gray-400">
+                        <thead>
+                            <th class="bg-red-400 text-white sticky top-0" colspan="4">
+                                <span>未ログイン:</span>
+                                <span id="js_num_of_not_login_members_table_header"></span>
+                                <span>人</span>
+                            </th>
+                        </thead>
+                        <tbody id="js_not_login_members_table" class="overflow-y-scroll h-32"></tbody>
+                    </table>
+                </div>
+                <div class="flex-auto m-2 overflow-y-auto h-96">
+                    <table class="w-full text-center border-collapse border border-gray-400">
+                        <th class="bg-red-400 text-white sticky top-0">欠席連絡済: <?=$member['num_of_abcence_members'];?>人</th>
+                        <?php foreach($absenceMembersNameList as $absenceMember):?>
+                            <tr><td class="border-collapse border border-gray-400"><?=$absenceMember['member_name'];?></td></tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+                <div class="flex-auto m-2 overflow-y-auto h-96">
+                    <table class="w-full text-center border-collapse border border-gray-400">
+                        <th class="bg-red-400 text-white sticky top-0">ログイン不要: <?=$member['num_of_staff_members'];?>人</th>
+                        <?php foreach($staffMembersNameList as $staffMember):?>
+                            <tr><td class="border-collapse border border-gray-400"><?=$staffMember['member_name'];?></td></tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+            </div>
+            <form action="./admin.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="back" value="TOP画面へ戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="../js/common_function.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/admin_login_member_check.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

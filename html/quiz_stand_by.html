@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBA クイズゲーム！！</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p><span class="text-2xl"><?=$userData['member_name']?></span> さん</p>
+        <p class="text-2xl text-center mt-3">ゲーム説明</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <p class="text-center">画面にクイズが出題されます</p>
+            <div class="flex justify-center mt-2 mb-2">
+                <div class="text-sm">
+                    <p>【参加形式】個人戦</p>
+                    <p>【解答方法】web入力フォーム</p>
+                    <p>【 問 題 数 】全10問</p>
+                    <p>【 検　索 】OK<span class="text-xs">（答えを教えあうのはNG）</span></p>
+                    <p>【制限時間】問題に応じた秒数</p>
+                    <p>【 賞　金 】問題に応じた金額</p>
+                </div>
+            </div>
+            <p class="text-sm text-center text-red-500">スーパーさとしくんを使用すると</p>
+            <p class="text-sm text-center text-red-500">正解時の獲得金が２倍になります</p>
+        </div>
+        <form action="../php/eba_quiz.php" method="POST" name="quizGameStart">
+            <input type="hidden" name="member_id" value="<?=$userData['member_id']?>">
+            <input type="hidden" name="member_name" value="<?=$userData['member_name']?>">
+        </form>
+        <h3 class="text-center text-xl font-bold">クイズ開始まで<br>しばらくお待ち下さい</h3>
+    </div>
+    <script src="../js/common_function.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/watch_quiz_game_state.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/quiz_stand_by.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

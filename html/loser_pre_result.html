@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="modal" class="modal">
+        <div class="wrapper">
+            <div id="main_area">
+                <p id="page_title">ゲーム説明</p>
+                <p>・じゃんけんゲームのオンラインバージョン</p>
+                <p>・勝つごとに次のゲームに進める勝ち抜き式</p>
+                <p>・あいこも負け</p>
+                <p>・勝ち抜いた残人数が5人以下になったらゲーム終了</p>
+                <p>・勝者は景品として5000円のクオカードを進呈</p>
+                <div><button id="baz"></button></div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <p><?=$userData['member_name']?> さん</p>
+        <div id="main_area">
+            <div>少々お待ちください・・・</div>
+            <p class="page_title">敗退！</p>
+            <p class="page_title">賞金ゲットならず・・・</p>
+            <p class="page_title">(-_-)zzZZ</p>
+            <form action="./routing.php" method="POST" name="toResult">
+                <input type="hidden" class="rps" name="rps" value="0">
+                <input type="hidden" id="member_id" name="member_id" value="<?=$_POST['member_id']?>">
+            </form>
+            <p class="page_title">現在<?=$numOfTime?>回戦中</p>
+        </div>
+        <div class="text-center">集計しています・・・</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/loser_pre_result.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

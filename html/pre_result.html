@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <p><?=$userData['member_name']?> さん</p>
+        <p id="page_title">結果発表！！！</p>
+        <div id="main_area">
+            <div>あなた：<?=$fmtYourChoise?></div>
+            <div>社長　：<?=$fmtAdminerChoise?></div>
+            <div>
+                <p><?=($winOrLose === 1) ? '勝ち【継続】(^_^)V' : '負け【終了】(T_T)' ?></p>
+            </div>
+        </div>
+    </div>
+    <form action="routing.php" method="POST" name="toResult">
+        <input type="hidden" name="member_id" value="<?=$_POST['member_id']?>">
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/pre_result.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <h2 id="page_title">設定画面</h2>
+        <h3 class="text-center"><?=$msg?></h3>
+        <div id="main_area">
+            <form action="" method="POST">
+                <div>
+                    <div>じゃんけんの項目を選ぶ制限時間</div>
+                    <div><input type="text" name="time_limit" value="<?=$configInfo['time_limit']?>">秒</div>
+                </div>
+                <br>
+                <div style="display: none;">
+                    <div>勝ち抜き人数</div>
+                    <div><input type="text" name="number_of_winners" value="<?=$configInfo['number_of_winners']?>">人</div>
+                </div>
+                <br>
+                <div>
+                    <div>アイコの場合の勝敗設定</div>
+                    <div>
+                        <input type="radio" name="draw_judge" value="0" <?=$radioZero?>><span>←勝ち</span>
+                        <input type="radio" name="draw_judge" value="1" <?=$radioOne?>><span>←負け</span>
+                    </div>
+                </div>
+                <br>
+                <div style="display: none;">
+                    <div>ゲーム説明文</div>
+                    <div><textarea name="explain_txt"  cols="50" rows="20"><?=$configInfo['explain_txt']?></textarea></div>
+                </div>
+                <div class="btn_area_kanri">
+                    <input type="hidden" name="from_page" value="<?=$_POST['from_page']?>">
+                    <input class="button" type="submit" name="change" value="更新">
+                </div>
+            </form>
+            <form action="./<?=$_POST['from_page']?>.php" method="POST">
+                <div class="btn_area_kanri">
+                    <input class="button" type="submit" name="back" value="戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

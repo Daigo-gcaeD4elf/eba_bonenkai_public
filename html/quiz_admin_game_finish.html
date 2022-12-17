@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズ ゲーム終了</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <h3 class="text-center font-bold text-lg">ゲーム終了</h3>
+            <div id="ranking_table_area">
+                <h3 class="text-center font-bold text-lg">最終結果！！</h3>
+                <div class="flex justify-center">
+                    <table class="w-full lg:w-11/12 table-fixed mb-4 text-center">
+                        <tr class="bg-red-400 text-white">
+                            <th class="border-collapse border border-gray-400">順位</th>
+                            <th class="border-collapse border border-gray-400">名前</th>
+                            <th class="border-collapse border border-gray-400">合計獲得金額(円)</th>
+                            <th class="border-collapse border border-gray-400">詳細</th>
+                        </tr>
+                        <?php foreach($totalScore as $score):?>
+                            <tr>
+                                <td class="border-collapse border border-gray-400"><?=$score['ranking']?></td>
+                                <td class="border-collapse border border-gray-400"><?=$score['member_name']?></td>
+                                <td class="border-collapse border border-gray-400"><?=$score['total_point']?></td>
+                                <td class="border-collapse border border-gray-400">
+                                    <form action="./quiz_admin_game_finish_detail.php" method="POST">
+                                        <input type="hidden" name="from_page" value="quiz_admin_game_finish">
+                                        <input type="hidden" name="game_id" value="<?=$nowQuizAdminStatus['now_game_id']?>">
+                                        <input type="hidden" name="member_id" value="<?=$score['member_id']?>">
+                                        <input type="hidden" name="member_name" value="<?=$score['member_name']?>">
+                                        <input type="submit" class="bg-gray-200 border-2 border-black text-xs p-0.5" name="result_member_detail" value="詳細">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+            </div>
+            <form action="./admin.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" value="トップに戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

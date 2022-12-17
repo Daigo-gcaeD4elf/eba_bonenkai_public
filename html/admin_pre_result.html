@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <p id="page_title">じゃ～んけ～ん</p>
+        <div id="main_area">
+            <p id="adminer_rps"><?=$adminerChoise?>を選択しています。</p>
+            <div id="bar">
+                <div>少々お待ちください・・・</div>
+            </div>
+            <form action="./admin_result.php" method="POST" name="toResult">
+                <div class="ingame_centered">
+                    <p class="ingame_p"><input type="radio" class="adminerRps" name="adminerRps" id="rock"     value="1" <?=$radioOne?> disabled>グー</p>
+                    <p class="ingame_p"><input type="radio" class="adminerRps" name="adminerRps" id="scissors" value="2" <?=$radioTwo?> disabled>チョキ</p>
+                    <p class="ingame_p"><input type="radio" class="adminerRps" name="adminerRps" id="paper"    value="3" <?=$radioThree?> disabled>パー</p>
+                </div>
+            </form>
+        </div>
+        <div class="text-center" style="display: none;">勝ち残り: <?=$numOfSurvivors?> 人</div>
+        <div class="text-center" style="display: none;">参加者　：<?=$numOfPlayers?> 人</div>
+        <div class="text-center">集計しています・・・</div>
+    </div>
+    <script src="../js/admin_pre_result.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

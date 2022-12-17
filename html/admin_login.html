@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん　管理ページ　ログイン画面</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p class="text-center text-3xl mt-4 mb-4">管理者ログイン画面</p>
+        <form action="" method="POST">
+            <div class="bg-green-50 m-3 p-4 border-2 border-black">
+                <p class="text-center mb-1"><span class="mr-4">ユーザーID</span><input type="text" name="username" class="border"></p>
+                <p class="text-center mb-1"><span class="mr-4">パスワード</span><input type="password" name="pass" class="border"></p>
+            </div>
+            <div class="text-center mt-10">
+                <div class="mb-4"><input class="w-3/4 md:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="send" value="ログイン"></div>
+                <?php if (!$adminLogin->chkUserExist()):?>
+                    <div class="mb-4"><input class="w-3/4 md:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="reg" value="新規登録"></div>
+                <?php endif;?>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

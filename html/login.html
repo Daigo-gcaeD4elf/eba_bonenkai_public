@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん</title>
+    <link rel="stylesheet" href="../css/stylesheet.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div id="wrapper">
+        <p id="page_title">ログイン</p>
+        <form action="../php/login.php" method="POST">
+            <div id="main_area">
+                <div id="p_name">名前を入力してね</div>
+                <div class="text-center" style="padding-bottom: 1em;">(ユーザーIDは、メールアドレスの@から前です)</div>
+                <div>ユーザーID<input type="text" name="id" placeholder="s.ebata"></div>
+                <div>パスワード<input type="text" name="password" placeholder="eba"></div>
+                <p class="error_msg"><?=$loginErr?></p>
+            </div>
+            <div class="btn_area">
+                <input class="button" type="submit" name="send" value="ログイン">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <p><?=$userData['member_name']?> さん</p>
+        <h2 id="page_title">第<?=$numOfTimes?>回戦 結果！</h2>
+        <div id="main_area" class="flex justify-center">
+            <table class="w-full lg:w-4/5 table-fixed mb-1 text-center">
+                <tr>
+                    <th colspan="3">勝ち  <?=count($survivors)?>人</th>
+                </tr>
+                <?php $i = 0;?>
+                <?php foreach($survivors as $survivor):?>
+                    <?php $i++;?>
+                    <?php if ($i % 3 === 1):?><tr><?php endif;?>
+                    <td class="w-full lg:w-3/5 table-fixed mb-1 text-center text-xs lg:text-base"><?=$survivor['member_name']?></td>
+                    <?php if ($i % 3 === 0):?></tr><?php endif;?>
+                <?php endforeach;?>
+                <?php if ($i % 3 !== 0):?>
+                    <?php for ($j = $i % 3; $j < 3; $j++):?>
+                        <td class="border-collapse"></td>
+                    <?php endfor;?>
+                    </tr>
+                <?php endif;?>
+            </table>
+        </div>
+        <div class="text-center">勝ち残り: <?=$numOfSurvivors?> 人</div>
+        <div class="text-center">参加者　: <?=$numOfPlayers?> 人</div>
+        <div>
+            <p class="text-center">次のゲームが始まるまでこのままお待ち下さい。</p>
+        </div>
+    </div>
+    <form action="routing.php" method="POST" name="nextGame">
+        <input type="hidden" name="member_id" value="<?=$_SESSION['member_id']?>">
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/common_function.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/watch_game_state.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/result.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

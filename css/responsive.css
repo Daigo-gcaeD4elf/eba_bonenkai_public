@@ -1,0 +1,39 @@
+/* �^�u���b�g�������C�A�E�g */
+@media all and (max-width: 1000px) {
+    #wrapper{
+        background-color:white;
+        width:80%;
+    }
+}
+
+/* ���o�C���������C�A�E�g */
+@media all and (max-width: 670px) {
+    #wrapper {
+        background-color:white;
+        width:90%;
+    }
+    #p_name {
+        font-size: 20px;
+    }
+    .main_p {
+        font-size: 13px;
+    }
+
+    table {
+        margin:0 auto;
+        width:100%;
+    }
+
+    th {
+        background: #e9727e;
+        border: solid 1px #ccc;
+        color: #fff;
+    }
+
+    td {
+        border: solid 1px #ccc;
+        /* display: block; */
+        height:20px;
+        width:100%;
+    }
+}

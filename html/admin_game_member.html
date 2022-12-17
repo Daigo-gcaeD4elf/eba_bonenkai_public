@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="wrapper">
+        <div>
+            <div style="display: none;">
+                <p><?=$msg?></p>
+                <form action="" method="POST" name="sendMail">
+                    <div class="btn_area_kanri">
+                        <input class="button" type="submit" class="sendMail" name="sendMail" value="メール送信">
+                        <input type="hidden" name="from_page" value="<?=$_POST['from_page']?>">
+                    </div>
+                </form>
+            </div>
+            <h3 class="text-center">メンバー情報</h3>
+            <table border="1">
+                <tr class="tr_kanri">
+                    <th class="th_kanri">表示名</th>
+                    <th class="th_kanri">ユーザーID</th>
+                    <th class="th_kanri">パスワード</th>
+                    <th class="th_kanri">メールアドレス</th>
+                    <th class="th_kanri">メール送信する/しない</th>
+                    <th class="th_kanri">ログイン状況</th>
+                </tr>
+                <?php foreach($members as $member):?>
+                    <tr tr class="tr_kanri">
+                        <td class="td_kanri"><?=$member['member_name']?></td>
+                        <td tr class="td_kanri"><?=$member['user_id']?></td>
+                        <td tr class="td_kanri"><?=$member['password']?></td>
+                        <td tr class="td_kanri"><?=$member['mail_address']?></td>
+                        <td tr class="td_kanri"><?=$member['whether_to_send_mail']?></td>
+                        <td tr class="td_kanri"><?=$member['login_state']?></td>
+                    </tr>
+                <?php endforeach;?>
+            </table>
+        </div>
+        <br>
+        <form action="" method="POST">
+            <div>メンバーを追加する</div>
+            <table border="1">
+                <tr>
+                    <th>表示名</th>
+                    <th>ユーザーID</th>
+                    <th>パスワード</th>
+                    <th>メールアドレス</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="newMemberName"></td>
+                    <td><input type="text" name="newUserId"></td>
+                    <td><input type="text" name="newPassword"></td>
+                    <td><input type="text" name="newMailAddress"></td>
+                </tr>
+            </table>
+            <div class="btn_area_kanri">
+                <input class="button" type="submit" name="addMember" value="追加">
+                <input type="hidden" name="from_page" value="<?=$_POST['from_page']?>">
+            </div>
+        </form>
+        <form action="./<?=$_POST['from_page']?>.php" method="POST">
+            <div class="btn_area_kanri">
+                <p><input class="button" type="submit" class="return" name="return" id="rock" value="戻る"></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズ 開催履歴</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div id="ranking_table_area">
+                <h3 class="text-center font-bold text-lg">開催履歴</h3>
+                <div class="flex justify-center">
+                    <table class="w-full lg:w-11/12 table-fixed mb-4 text-center">
+                        <tr class="bg-red-400 text-white">
+                            <th class="border-collapse border border-gray-400">題名</th>
+                            <th class="border-collapse border border-gray-400">開催時刻</th>
+                            <th class="w-1/6 border-collapse border border-gray-400">詳細</th>
+                        </tr>
+                        <?php foreach($quizGameHistory as $history):?>
+                            <tr>
+                                <td class="border-collapse border border-gray-400"><?=$history['game_name']?></td>
+                                <td class="border-collapse border border-gray-400"><?=$history['game_date']?></td>
+                                <td class="border-collapse border border-gray-400">
+                                    <form action="./quiz_admin_show_game_result.php" method="POST">
+                                        <input type="hidden" name="from_page" value="quiz_admin_show_result">
+                                        <input type="hidden" name="game_id" value="<?=$history['game_id']?>">
+                                        <input type="hidden" name="game_name" value="<?=$history['game_name']?>">
+                                        <input type="hidden" name="game_date" value="<?=$history['game_date']?>">
+                                        <input type="submit" class="bg-gray-200 border-2 border-black text-xs p-0.5" name="result_member_detail" value="詳細">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+            </div>
+            <form action="./admin.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" value="トップに戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

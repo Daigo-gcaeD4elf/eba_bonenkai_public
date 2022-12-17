@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/stylesheet.css?now=<?=date('YmdHis')?>">
+    <link rel="stylesheet" href="../css/responsive.css?now=<?=date('YmdHis')?>">
+</head>
+<body>
+    <div id="modal" class="modal">
+        <div class="wrapper">
+            <div id="main_area">
+                <p id="page_title">ゲーム説明</p>
+                <p class="main_p">【勝ち】 継続：nextゲームへ</p>
+                <p class="main_p">【負け】 終了：ゲームover</p>
+                <p class="main_p">【あいこ】 負け：ゲームover</p>
+                <p class="main_p">【賞金】 クオカード5000円</p>
+                <div><button id="close_modal"></button></div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <p><?=$userData['member_name']?> さん</p>
+        <div>
+            <p class="page_title"><?=$numOfTime?>回戦</p>
+        </div>
+        <p class="page_title">じゃ～んけ～ん</p>
+        <div id="main_area">
+            <div id="bar">
+                <countdown></countdown>
+            </div>
+            <form action="routing.php" method="POST" name="toResult">
+                <div class="ingame_centered">
+                    <p class="ingame_p"><input type="radio" class="rps" name="rps" id="rock"     value="1" <?=$radioOne?>>グー</p>
+                    <p class="ingame_p"><input type="radio" class="rps" name="rps" id="scissors" value="2" <?=$radioTwo?>>チョキ</p>
+                    <p class="ingame_p"><input type="radio" class="rps" name="rps" id="paper"    value="3" <?=$radioThree?>>パー</p>
+                    <input type="hidden" id="member_id" name="member_id" value="<?=$_POST['member_id']?>">
+                </div>
+            </form>
+        </div>
+        <div class="text-center">勝ち抜き人数：<?=$numOfSurvivor?>人</div>
+        <div class="btn_area"  style="display: none;">
+            <div><input id="button" type="submit" name="send" value="ぽいっ！"></div>
+            <div><button id="open_modal">ゲーム説明</button></div>
+        </div>
+    </div>
+    <script>
+        let id = '<?=$_SESSION["member_id"]?>';
+        let timeLimit = '<?=$timeLimit?>';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/index.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

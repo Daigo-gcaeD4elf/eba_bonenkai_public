@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第<?=$nowQuizAdminStatus['now_game_order']?>問目　出題中</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="flex justify-center mb-2">
+                <div class="w-4/5 text-center bg-gray-50 border-2 border-black">
+                    <p class="font-bold">第<?=$nowQuizAdminStatus['now_game_order']?>問目　出題中</p>
+                    <div class="mt-2 mb-2"><?=$nowQuiz['quiz_question_sentence']?></div>
+                    <div>配当金額：<?=$nowQuiz['allocation']?>円</div>
+                </div>
+            </div>
+            <div id="app_countdown">
+                <countdown></countdown>
+            </div>
+            <div class="text-center mt-3 mb-3">
+                <div>========= 選択肢 =========</div>
+                <?php foreach($nowQuizOption as $option):?>
+                    <div>【<?=$option['quiz_option_id']?>】 <?=$option['quiz_option_text']?></div>
+                <?php endforeach;?>
+                <div>==========================</div>
+            </div>
+            <?php if(count($totalScore) < MAX_VIEW_RANKING_LIST):?>
+                <hr class="mt-2 mb-2">
+                <p class="text-center font-bold mt-2">現在の総合順位</p>
+                <div class="flex justify-center" id="ranking_table_area">
+                    <table class="w-full lg:w-4/5 table-fixed text-center">
+                        <tr class="bg-red-400 text-white">
+                            <th class="w-1/6 border-collapse border border-gray-400">順位</th>
+                            <th class="border-collapse border border-gray-400">名前</th>
+                            <th class="border-collapse border border-gray-400">合計獲得金額(円)</th>
+                        </tr>
+                        <?php foreach($totalScore as $score):?>
+                        <tr>
+                            <td class="border-collapse border border-gray-400"><?=$score['ranking']?></td>
+                            <td class="border-collapse border border-gray-400"><?=$score['member_name']?></td>
+                            <td class="border-collapse border border-gray-400"><?=$score['total_point']?></td>
+                        </tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+            <?php endif;?>
+        </div>
+        <form action="./quiz_admin_game_decide_answer.php" method="POST" name="goToDecideAnswer"></form>
+    </div>
+    <script>
+        let timeLimit = '<?=$timeLimit?>';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/quiz_admin_game_ask_question.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

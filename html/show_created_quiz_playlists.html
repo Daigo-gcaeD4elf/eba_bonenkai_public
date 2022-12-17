@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作成したクイズプレイリスト</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="flex justify-center">
+                <table class="text-center w-full table-fixed border-collapse border border-gray-400">
+                    <tr class="bg-red-400 text-white">
+                        <th class="border-collapse border border-gray-400 w-3/12">プレイリスト名</th>
+                        <th class="border-collapse border border-gray-400 w-5/12">プレイリスト内容</th>
+                        <th class="border-collapse border border-gray-400 w-3/12">スーパーさとしくん<br>使用可能回数</th>
+                        <th class="border-collapse border border-gray-400 w-1/12"></th>
+                        <th class="border-collapse border border-gray-400 w-1/12"></th>
+                    </tr>
+                    <?php foreach($quizPlaylists as $list):?>
+                        <tr>
+                            <td class="border-collapse border border-gray-400"><?=$list['playlist_title']?></td>
+                            <td class="border-collapse border border-gray-400">
+                                <?php foreach($list['playlist'] as $playlist):?>
+                                    <div class="border-collapse border border-gray-400"><?=$playlist['playlist_order']?>問目. <?=$playlist['quiz_question_sentence']?></div>
+                                <?php endforeach;?>
+                            </td>
+                            <td class="border-collapse border border-gray-400"><?=$list['super_satoshikun_power_point']?></td>
+                            <td class="border-collapse border border-gray-400">
+                                <form action="./create_quiz_playlist_edit.php?playlist_id=<?=$list['playlist_id']?>" method="POST">
+                                    <input type="hidden" name="from_page" value="show_created_quiz_playlists">
+                                    <input type="submit" name="quiz_playlist_edit" class="border border-black" value="編集">
+                                </form>
+                            </td>
+                            <td class="border-collapse border border-gray-400">
+                                <?php $playlistId = $list['playlist_id'];?>
+                                <?php $playlistTitle = $list['playlist_title'];?>
+                                <form action="" onsubmit='deleteMsg("<?=$playlistTitle?>")' method="POST">
+                                    <input type="hidden" name="from_page" value="show_created_quizzes">
+                                    <input type="hidden" name="quiz_playlist_id" value="<?=$list['playlist_id']?>">
+                                    <input type="submit" name="quiz_playlist_delete" class="border border-black" value="削除">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                </table>
+            </div>
+        </div>
+        <form action="./quiz_config.php" method="POST">
+            <div class="m-4 mt-8 text-center">
+                <input class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="back" value="戻る">
+            </div>
+        </form>
+    </div>
+    <script>
+        function deleteMsg (playlistTitle) {
+            return confirm(`プレイリスト「${playlistTitle}」を削除します。よろしいですか？`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+/*▼全体的な範囲やサイズを決めるCSS*/
+/*▼全体的な範囲やサイズを決めるCSS*/
+/*▼全体的な範囲やサイズを決めるCSS*/
+/*▼全体的な範囲やサイズを決めるCSS*/
+.text-center {
+    text-align: center;
+}
+
+/*wrapperのcss */
+body {
+    width:100%;
+    background-color: #f2f7f5;
+}
+#wrapper {
+    background-color:white;
+    width:50%;
+    margin: 5% auto;
+    border: solid 3px #000000;
+    height: 100%;
+}
+/*main_areaのcss*/
+#main_area {
+    background-color: #f2f7f5;
+    margin: 5%;
+    border: solid 3px #000000;
+    text-align: center;
+    padding: 15px;
+}
+
+.main_area {
+    background-color: #f2f7f5;
+    margin: 5%;
+    border: solid 3px #000000;
+    text-align: center;
+    padding: 15px;
+}
+
+/*ボタンを配置するエリアのcss*/
+.btn_area {
+    background-color: white;
+    margin:5%;
+    text-align: center;
+}
+.btn_area_kanri {
+    margin:5%;
+    text-align: center;
+}
+
+/*じゃんけん選択画面の中央ぞろえ*/
+.ingame_centered {
+    width:100px;
+    margin:0 auto;
+}
+.ingame_p{
+    text-align: left;
+}
+
+
+/*▼文字とかボタンとか詳細の部分のcss*/
+/*▼文字とかボタンとか詳細の部分のcss*/
+/*▼文字とかボタンとか詳細の部分のcss*/
+/*▼文字とかボタンとか詳細の部分のcss*/
+
+/*共通ページのタイトルの文字サイズや色の変更*/
+#page_title {
+    font-size: 30px;
+    text-align: center;
+    color: #00473e;
+}
+
+.page_title {
+    font-size: 30px;
+    text-align: center;
+    color: #00473e;
+}
+/*メインページのPタグデザイン*/
+.main_p{
+    text-align: left;
+}
+
+/*「名前を入力してね」テキストのcss*/
+#p_name {
+    font-size: 30px;
+    text-align: center;
+    color: #475d5b;
+}
+
+/*ログイン画面エラーメッセージ色変更*/
+.error_msg{
+    color:red;
+}
+/*ボタンのデザインのcss*/
+#button {
+    width: 50%;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border: solid 1px #ccc;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+#button:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+.button {
+    width: 50%;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border: solid 1px #ccc;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+.button:hover{
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+/*ラジオボタンのサイズ変更*/
+input[type=radio] {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+/*名前入力欄のcss*/
+#input_name {
+    width: 80%;
+    border:0;
+    padding:10px;
+    font-size:1.3em;
+    font-family:Arial, sans-serif;
+    color:#aaa;
+    border:solid 1px #ccc;
+    margin:0 0 20px;
+}
+/*テーブルデザイン*/
+table {
+    margin:0 auto;
+    width:100%;
+}
+
+tr{
+
+}
+
+th{
+    background: #e9727e;
+    border: solid 1px #ccc;
+    color: #fff;
+}
+td {
+    border: solid 1px #ccc;
+    height:20px;
+    width:19%;
+}
+.tr_kanri {
+
+}
+.td_kanri{
+    border: solid 1px #ccc;
+    height:20px;
+    width:16%;
+}
+.th_kanri{
+    background: #e9727e;
+    border: solid 1px #ccc;
+    color: #fff;
+}
+
+/* モーダルウィンドウ */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+/* モーダルウィンドウ */
+.modal-content {
+    background-color: white;
+    width: 500px;
+    margin: 40% auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* クリアフィックス */
+.clearfix:after {
+    content:"";
+    display:block;
+    clear:both;
+}
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}

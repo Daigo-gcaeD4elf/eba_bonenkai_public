@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社長とじゃんけん！！！</title>
+    <link rel="stylesheet" href="../css/dist.css">
+</head>
+<body class="bg-green-50">
+    <div class="bg-white w-2/4 container mx-auto m-4 p-2">
+        <p class="text-3xl text-center pt-1">管理者画面TOP</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="m-4 mt-8 text-center">
+                <form action="./admin_game_member.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="config" value="メンバー情報">
+                </form>
+            </div>
+        </div>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="m-4 mt-8 text-center">
+                <form action="./admin.php" method="POST" name="startGame">
+                    <input type="hidden" id="button" name="game_start" value="ゲームスタート">
+                </form>
+                <button class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="button" id="startBtn">じゃんけん ゲームスタート</button>
+            </div>
+            <div class="m-4 mt-8 text-center">
+                <form action="./admin_login_member_check.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="config" value="じゃんけん ログイン状況チェック">
+                </form>
+            </div>
+            <div class="m-4 mt-8 text-center">
+                <form action="./config.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="config" value="じゃんけん 各種設定">
+                </form>
+            </div>
+        </div>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="m-4 mt-8 text-center">
+                <form action="./quiz_admin_choose_playlist.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="quiz_config" value="クイズ ゲームスタート">
+                </form>
+            </div>
+            <div class="m-4 mt-8 text-center">
+                <form action="./quiz_admin_login_member_check.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="quiz_config" value="クイズ ログイン状況チェック">
+                </form>
+            </div>
+            <div class="m-4 mt-8 text-center">
+                <form action="./quiz_config.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="quiz_config" value="クイズ 各種設定">
+                </form>
+            </div>
+            <div class="m-4 mt-8 text-center">
+                <form action="./quiz_admin_show_result.php" method="POST">
+                    <input type="hidden" name="from_page" value="admin">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="quiz_config" value="過去の結果を見る">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../js/admin.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBA クイズゲーム！！</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p><span class="text-2xl"><?=$userData['member_name']?></span> さん</p>
+        <p>合計獲得金額：<?=$yourTotalScore['total_point']?> 円</p>
+        <p>現在の順位：<?=$yourTotalScore['ranking']?> 位</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="flex justify-center mb-2">
+                <div class="w-4/5 text-center bg-gray-50 border-2 border-black">
+                    <p class="font-bold">第<?=$nowQuizAdminStatus['now_game_order']?>問目<p>
+                    <div class="mt-2 mb-2"><?=$nowQuiz['quiz_question_sentence']?></div>
+                    <div>配当金額：<?=$nowQuiz['allocation']?>円</div>
+                </div>
+            </div>
+            <div id="app_countdown">
+                <countdown></countdown>
+            </div>
+            <div class="mt-3 mb-3">
+                <div class="text-center">========= 選択肢 =========</div>
+                <div class="flex justify-center">
+                <div class="lg:w-1/3">
+                    <div class="text-center">
+                        <?php foreach($nowQuizOption as $option):?>
+                        <?php $lineThrough = ($isUsingFiftyFifty === '1' && $option['fifty_fifty_display'] === '0') ? ' line-through' : '';?>
+                        <?php $disabled = ($isUsingFiftyFifty === '1' && $option['fifty_fifty_display'] === '0') ? ' disabled' : '';?>
+                        <div class="flex pl-0.5 pr-0.5">
+                            <?php $optionId = $option['quiz_option_id'];?>
+                            <input type="radio" name="your_answer" class="js_your_answer flex-shrink w-5 h-5 align-middle text-right m-1" onclick="resisterYourAnswer('<?=$optionId?>')" value="<?=$option['quiz_option_id']?>"<?=$disabled?> <?=($option['quiz_option_id'] == $defaultAnswer) ? ' checked' : ''?>>
+                            <span class="flex-1 mr-4 flex items-center text-left<?=$lineThrough?>">
+                                【<?=$option['quiz_option_id']?>】 <?=$option['quiz_option_text']?>
+                            </span>
+                            <span id="js_members_answer_<?=$option['quiz_option_id']?>" class="flex-shrink text-lg m-1"></span>
+                            <?php if($isUsingAudience === '1'):?>
+                                <span class="flex-shrink text-xs flex items-center"> 名 選択中</span>
+                            <?php endif;?>
+                        </div>
+                        <?php endforeach;?>
+                    </div>
+                    </div>
+                </div>
+                <div class="text-center">========================</div>
+            </div>
+            <div class="m-4 text-center flex justify-center">
+                <div class="m-1">
+                    <form action="../php/eba_quiz.php" method="POST" name="useFiftyFifty">
+                        <input type="hidden" name="use_fifty_fifty" value="1">
+                        <input type="hidden" name="member_id" value="<?=$userData['member_id']?>">
+                        <input type="hidden" name="member_name" value="<?=$userData['member_name']?>">
+                        <button type="button" id="js_use_fifty_fifty_button" class="p-1 mr-2 border-4 border-solid border-transparent rounded-lg">
+                            <?php if ($fiftyFiftyStock > 0 && $fiftyFiftyChooseAble === '1'):?>
+                                <img src="../img/available_fifty_fifty.png?now=<?=date('YmdHis')?>" alt="">
+                            <?php else:?>
+                                <img src="../img/not_available_fifty_fifty.png?now=<?=date('YmdHis')?>" alt="">
+                            <?php endif;?>
+                        </button>
+                    </form>
+                </div>
+                <div class="m-1">
+                    <form action="../php/eba_quiz.php" method="POST" name="useAudience">
+                        <input type="hidden" name="use_audience" value="1">
+                        <input type="hidden" name="member_id" value="<?=$userData['member_id']?>">
+                        <input type="hidden" name="member_name" value="<?=$userData['member_name']?>">
+                        <button type="button" id="js_use_audience_button" class="p-1 ml-2 border-4 border-solid border-transparent rounded-lg">
+                            <?php if ($audienceStock > 0 && $audienceChooseAble === '1'):?>
+                                <img src="../img/available_audience.png?now=<?=date('YmdHis')?>" alt="">
+                            <?php else:?>
+                                <img src="../img/not_available_audience.png?now=<?=date('YmdHis')?>" alt="">
+                            <?php endif;?>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <div class="text-center">スーパーさとしくん</div>
+                <div class="text-center">残り使用可能回数： <?=$superSatoshikunStock?>回</div>
+                <div class="text-center flex items-center mb-1 justify-center">
+                    <?php for ($i = 0; $i < $superSatoshikunPowerPoint; $i++):?>
+                        <?php if ($i < $superSatoshikunStock):?>
+                            <img src="../img/available_super_satoshikun.png?now=<?=date('YmdHis')?>" alt="">
+                        <?php else:?>
+                            <img src="../img/not_available_super_satoshikun.png?now=<?=date('YmdHis')?>" alt="">
+                        <?php endif;?>
+                    <?php endfor;?>
+                </div>
+                <div class="mt-1 text-center">スーパーさとしくんを、</div>
+                <div class="flex justify-center">
+                    <div class="text-left">
+                        <div><input type="radio" name="super_satoshi_kun" class="js_super_satoshikun w-5 h-5 align-middle m-1" onclick="changeIsUsingSupersatoshikun('<?=NOT_USING_SUPER_SATOSHIKUN?>')" <?=($superSatoshikunStock == 0) ? ' disabled' : ''?> <?=($isUsingSuperSatoshikun == 0) ? ' checked' : ''?>>使わない</div>
+                        <div><input type="radio" name="super_satoshi_kun" class="js_super_satoshikun w-5 h-5 align-middle m-1" onclick="changeIsUsingSupersatoshikun('<?=USING_SUPER_SATOSHIKUN?>')" <?=($superSatoshikunStock == 0) ? ' disabled' : ''?> <?=($isUsingSuperSatoshikun == 1) ? ' checked' : ''?>>使う</div>
+                    </div>
+                </div>
+            </div>
+            <?php if(count($totalScore) < MAX_VIEW_RANKING_LIST):?>
+                <hr class="mt-2 mb-2">
+                <p class="text-center font-bold mt-2">現在の総合順位</p>
+                <div class="flex justify-center" id="ranking_table_area">
+                    <table class="w-full lg:w-4/5 table-fixed text-center">
+                        <tr class="bg-red-400 text-white">
+                            <th class="w-1/6 border-collapse border border-gray-400">順位</th>
+                            <th class="border-collapse border border-gray-400">名前</th>
+                            <th class="border-collapse border border-gray-400">合計獲得金額(円)</th>
+                        </tr>
+                        <?php foreach($totalScore as $score):?>
+                        <tr class="<?=($score['member_id'] === $_SESSION['member_id']) ? 'bg-yellow-200' : ''?>">
+                            <td class="border-collapse border border-gray-400"><?=$score['ranking']?></td>
+                            <td class="border-collapse border border-gray-400"><?=$score['member_name']?></td>
+                            <td class="border-collapse border border-gray-400"><?=$score['total_point']?></td>
+                        </tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+            <?php endif;?>
+        </div>
+        <form action="../php/eba_quiz.php" method="POST" name="quizTimeup">
+            <input type="hidden" name="member_id" value="<?=$userData['member_id']?>">
+            <input type="hidden" name="member_name" value="<?=$userData['member_name']?>">
+        </form>
+    </div>
+    <script>
+        let quizId    = '<?=$nowQuizAdminStatus["now_quiz_id"]?>';
+        let gameId    = '<?=$nowQuizAdminStatus["now_game_id"]?>';
+        let gameOrder = '<?=$nowQuizAdminStatus["now_game_order"]?>';
+        let memberId  = '<?=$_SESSION["member_id"]?>';
+        let timeLimit = '<?=$timeLimit?>';
+        let superSatoshikunStock = '<?=$superSatoshikunStock?>';
+        let fiftyFiftyStock = '<?=$fiftyFiftyStock?>';
+        let fiftyFiftyChooseAble = '<?=$fiftyFiftyChooseAble?>';
+        let audienceStock = '<?=$audienceStock?>';
+        let audienceChooseAble = '<?=$audienceChooseAble?>';
+        let isUsingAudience = '<?=$isUsingAudience?>';
+        let memberAnswersJson = '<?=$memberAnswersJson?>';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/common_function.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/quiz_answer_time.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

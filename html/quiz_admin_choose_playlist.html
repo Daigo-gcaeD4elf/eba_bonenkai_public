@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBA クイズ</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 md:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <h3 class="text-center font-bold text-xl mb-2">プレイリストを選択してゲームスタートして下さい</h3>
+            <form action="./quiz_admin_game_start.php" method="POST" name="startQuiz">
+                <div class="flex justify-center">
+                    <table class="text-center w-full table-fixed border-collapse border border-gray-400">
+                        <tr class="bg-red-400 text-white">
+                            <th class="w-1/12 border-collapse border border-gray-400">選択</th>
+                            <th class="border-collapse border border-gray-400">プレイリスト名</the=>
+                            <th class="w-1/2 border-collapse border border-gray-400">プレイリスト内容</th>
+                            <th class="w-1/6 border-collapse border border-gray-400">スーパーさとしくん<br>使用可能回数</th>
+                        </tr>
+                        <?php foreach($quizPlaylists as $list):?>
+                            <tr>
+                                <td class="border-collapse border border-gray-400"><input type="radio" class="w-6 h-6 m-2 align-middle" name="selected_quiz_playlist_id" value="<?=$list['playlist_id']?>" <?=($list['playlist_id'] == 1) ? ' checked' : ''?>></td>
+                                <td class="border-collapse border border-gray-400"><?=$list['playlist_title']?></td>
+                                <td class="border-collapse border border-gray-400">
+                                    <?php foreach($list['playlist'] as $playlist):?>
+                                    <div><?=$playlist['playlist_order']?>問目. <?=$playlist['quiz_question_sentence']?></div>
+                                    <?php endforeach;?>
+                                </td>
+                                <td class="border-collapse border border-gray-400"><?=$list['super_satoshikun_power_point']?></td>
+                            </tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+                <div class="mt-2 mb-2">
+                    <div class="text-center">ゲームタイトル(任意)</div>
+                    <div class="text-center">
+                        <input type="text" name="quiz_game_title" class="border border-black" autocomplete="off">
+                    </div>
+                </div>
+                <div class="m-4 text-center">
+                    <input type="hidden" name="quiz_start" value="ゲームスタート">
+                    <button class="w-3/4 md:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="button" id="js_quiz_start_button">クイズ ゲームスタート</button>
+                </div>
+            </form>
+            <form action="./admin.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input class="w-3/4 md:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" type="submit" name="back" value="TOP画面へ戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        let startBtn  = document.getElementById('js_quiz_start_button');
+
+        startBtn.addEventListener('click', () => {
+            if (confirm('クイズゲームを始めます。\n よろしいですか？')) {
+                document.startQuiz.submit();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第<?=$nowQuizAdminStatus['now_game_order']?>問目終了</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p><span class="text-2xl"><?=$userData['member_name']?></span> さん</p>
+        <p>合計獲得金額：<?=$yourTotalScore['total_point']?> 円</p>
+        <p>現在の順位：<?=$yourTotalScore['ranking']?> 位</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <div class="hidden">
+                <div class="flex justify-center mb-2">
+                    <div class="w-4/5 text-center bg-gray-50 border-2 border-black">
+                        <p class="font-bold">第<?=$nowQuizAdminStatus['now_game_order']?>問目　終了<p>
+                        <div class="mt-2 mb-2"><?=$nowQuiz['quiz_question_sentence']?></div>
+                        <div>配当金額：<?=$nowQuiz['allocation']?>円</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 mb-5">
+                <?php if ($yourResult['is_correct_answer'] == IS_CORRECT_TO_THE_QUIZ):?>
+                    <p class="text-center text-sm text-red-600">おめでとう</p>
+                    <p class="text-center font-bold text-4xl text-red-600">正 解</p>
+                    <p class="text-center"><?=$yourResult['acquired_point']?>円 獲得しました！！</h2>
+                <?php else:?>
+                    <p class="text-center text-sm text-blue-600">残念</p>
+                    <p class="text-center font-bold text-4xl text-blue-600 tracking-widest">不正解</p>
+                <?php endif;?>
+            </div>
+            <div class="mb-2 text-center hidden">
+                <div class="text-sm pr-1">あなたの回答</div>
+                <div class="text-base pr-4">【<?=$yourResult['member_answer']?>】 <?=$yourResult['quiz_option_text']?></div>
+            </div>
+            <div class="mb-2 text-center hidden">
+                <div class="text-sm">正解</div>
+                <div class="text-xl font-bold pr-4">【<?=$correctAnswer['quiz_answer']?>】 <?=$correctAnswer['quiz_option_text']?></div>
+            </div>
+            <hr class="mt-2 hidden">
+            <div class="text-center mt-2 mb-2">
+                正解者： <?=count($correctAnswerMembers)?>名
+                <button type="button" class="bg-gray-200 border-2 border-black p-0.5 text-xs" onclick="toggleShowTable()" id="js_toggle_btn">表示</button>
+            </div>
+            <div class="flex justify-center">
+                <table class="w-full lg:w-4/5 table-fixed mb-1 text-center" id="js_toggle_table" style="display: none;">
+                    <?php $i = 0;?>
+                    <?php foreach ($correctAnswerMembers as $member):?>
+                        <?php $i++;?>
+                        <?php if ($i % 4 === 1):?>
+                            <tr>
+                        <?php endif;?>
+                        <td class="text-xs lg:text-sm text-center border-collapse border border-gray-400 <?=($member['member_id'] == $_SESSION['member_id']) ? 'bg-yellow-200' : ''?> <?=($member['is_using_super_satoshikun'] == USING_SUPER_SATOSHIKUN) ? ' font-extrabold text-red-600' : ''?>"><?=$member['member_name']?></td>
+                        <?php if ($i % 4 === 0):?>
+                            </tr>
+                        <?php endif;?>
+                    <?php endforeach;?>
+                    <?php if ($i % 5 !== 0):?>
+                        <?php for ($j = $i % 4; $j < 4; $j++):?>
+                            <td class="border-collapse border border-gray-400"></td>
+                        <?php endfor;?>
+                        </tr>
+                    <?php endif;?>
+                </table>
+            </div>
+            <?php if(count($totalScore) < MAX_VIEW_RANKING_LIST):?>
+                <hr class="mt-2">
+                <div id="ranking_table_area">
+                    <p class="text-center font-bold mt-2">現在の総合順位</p>
+                    <div class="flex justify-center">
+                        <table class="text-center w-full lg:w-4/5 table-fixed border-collapse border border-gray-400">
+                            <tr class="bg-red-400 text-white">
+                                <th class="w-1/6 border-collapse border border-gray-400">順位</th>
+                                <th class="border-collapse border border-gray-400">名前</th>
+                                <th class="border-collapse border border-gray-400">合計獲得金額(円)</th>
+                            </tr>
+                            <?php foreach($totalScore as $score):?>
+                            <tr class="<?=($score['member_id'] === $_SESSION['member_id']) ? 'bg-yellow-200' : ''?>">
+                                <td class="border-collapse border border-gray-400"><?=$score['ranking']?></td>
+                                <td class="border-collapse border border-gray-400"><?=$score['member_name']?></td>
+                                <td class="border-collapse border border-gray-400"><?=$score['total_point']?></td>
+                            </tr>
+                            <?php endforeach;?>
+                        </table>
+                    </div>
+                </div>
+            <?php endif;?>
+        </div>
+        <form action="../php/eba_quiz.php" method="POST" name="goToNextPage">
+            <input type="hidden" name="member_id" value="<?=$userData['member_id']?>">
+            <input type="hidden" name="member_name" value="<?=$userData['member_name']?>">
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../js/common_function.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/watch_quiz_game_state.js?now=<?=date('YmdHis')?>"></script>
+    <script src="../js/quiz_result.js?now=<?=date('YmdHis')?>"></script>
+</body>
+</html>

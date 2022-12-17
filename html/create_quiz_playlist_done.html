@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズプレイリストを作成</title>
+    <link rel="stylesheet" href="../css/dist.css?now=<?=date('YmdHis')?>">
+</head>
+<body class="bg-green-50 flex justify-center">
+    <div class="bg-white w-11/12 lg:w-2/4 container mx-auto m-4 p-2 border-2 border-black">
+        <p class="text-2xl text-center mt-3">クイズプレイリストを作成 確定画面</p>
+        <div class="bg-green-50 m-3 p-4 border-2 border-black">
+            <h3 class="text-center font-bold"><?=$confMsg?></h3>
+            <div class="mt-2 mb-2">
+                <div class="text-center">プレイリスト名</div>
+                <div class="text-center"><?=$_POST['playlist_title'];?></div>
+            </div>
+            <div class="mt-8 mb-2">
+                <?php $i = 0;?>
+                <?php while(!empty($_POST['playlist_order_'. $i])):?>
+                    <div class="text-center"><?=h($_POST['playlist_order_'. $i])?>問目. <?=h($_POST['quiz_question_sentence_'. $i])?></div>
+                    <?php $i = $i + 1;?>
+                <?php endwhile;?>
+            </div>
+            <div class="mt-8 mb-2">
+                <div class="text-center">スーパーさとしくん使用可能回数</div>
+                <div class="text-center"><?=h($_POST['super_satoshikun_power_point'])?></div>
+            </div>
+            <div class="mt-8 mb-2">
+                <div class="text-center">フィフティフィフティ使用可能回数</div>
+                <div class="text-center"><?=h($_POST['fifty_fifty_power_point'])?></div>
+            </div>
+            <div class="mt-8 mb-2">
+                <div class="text-center">オーディエンス使用可能回数</div>
+                <div class="text-center"><?=h($_POST['audience_power_point'])?></div>
+            </div>
+            <div class="m-4 mt-8 text-center">
+                <form action="./create_quiz_playlist_edit.php" method="POST">
+                    <input type="hidden" name="from_page" value="<?=$_POST['from_page']?>">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="create_quiz_playlist" value="つづけてプレイリストを作成する">
+                </form>
+            </div>
+            <form action="./<?=$_POST['from_page']?>.php" method="POST">
+                <div class="m-4 mt-8 text-center">
+                    <input type="submit" class="w-3/4 lg:w-1/2 h-11 tracking-widest bg-white border border-gray-200 rounded-full shadow-lg cursor-pointer hover:bg-green-300 hover:text-white" name="create_quiz_playlist" value="戻る">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
